@@ -1,0 +1,7 @@
+To install:
+
+pip3 install -r requirements.txt
+
+Run:
+
+python3 kweddl.py
