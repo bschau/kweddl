@@ -7,19 +7,18 @@ namespace kweddl
 	public class SaveMusic
 	{
 		readonly char[] _invalidFileNameChars = Path.GetInvalidFileNameChars();
-        readonly string _home;
+        readonly string _desktopFolder;
 
-        public SaveMusic(string home)
+        public SaveMusic(string desktopFolder)
         {
-            _home = home;
+			_desktopFolder = desktopFolder;
         }
 
 		public void Execute(KwedItem kwedItem, byte[] data)
 		{
 			var filename = new string(kwedItem.Title
                     .Where(c => !_invalidFileNameChars.Contains(c)).ToArray());
-			var downloadTo = Path.Combine(_home, "Desktop");
-			filename = Path.Combine(downloadTo, $"{filename}.mp3");
+			filename = Path.Combine(_desktopFolder, $"{filename}.mp3");
 			File.WriteAllBytes(filename, data);
         }
     }

@@ -6,7 +6,6 @@ namespace kweddl
 {
 	class Program
 	{
-		static string _home;
 		static string _hiddenPrefix;
 
 		static void Main(string[] args)
@@ -14,10 +13,12 @@ namespace kweddl
 			try
 			{
 				const string baseDomain = "remix.kwed.org";
+				var documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+				var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 				Initialize();
-				var saveMusic = new SaveMusic(_home);
+				var saveMusic = new SaveMusic(desktopFolder);
 
-				var counterFile = Path.Combine(_home, $"{_hiddenPrefix}kwedrc");
+				var counterFile = Path.Combine(documentsFolder, $"{_hiddenPrefix}kwedrc");
 				var counter = new Counter(counterFile);
 				counter.Load();
 
@@ -54,13 +55,11 @@ namespace kweddl
 			var isWindows = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows);
 			if (isWindows)
 			{
-				_home = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
 				_hiddenPrefix = "_";
 			}
 			else
 			{
 				_hiddenPrefix = ".";
-				_home = Environment.GetEnvironmentVariable("HOME");
 			}
 		}
 	}
